@@ -1,32 +1,14 @@
 # 7.0 Expanded Dataset Model Analysis: What Worked, What Didn't, and Why¶
-
 Insight on:
-
 > *What worked and what didn't? Why did one model outperform another? What are the failure modes? What would you do with more time?
 
-## Setup¶
-    
-    
-    2026-05-10 21:16:36.692 | INFO     | formvision.config:<module>:11 - PROJ_ROOT path is: /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION
-    Project root  : /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION
-    PROCESSED_DATA: /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION/data/processed
-    MODELS_DIR    : /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION/models
-    REPORTS_DIR   : /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION/reports
-    FIGURES_DIR   : /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION/reports/figures
-    device: mps
-    
-
-## Load Saved Metrics¶
-
+## Loading Saved Metrics¶
 Results come from three saved JSON files:
 
   * `bert-baseline_v1.json` — original BERT, 4 entity types
   * `bert-expanded_v1.json` — BERT with 8 entity types (run 2.1-bert-expanded.ipynb first)
   * `layoutlmv3-lr5e-5_bs2_v1.json` — LayoutLMv3 with 8 entity types
 
-
-    
-    
     Loaded files:
       bert-baseline             F1=0.368
       bert-expanded             F1=0.5012
@@ -34,13 +16,7 @@ Results come from three saved JSON files:
       layoutlmv3-expanded       F1=0.7094
     
 
-## Overall Model Comparison¶
-
-No description has been provided for this image
-
-No description has been provided for this image
-    
-    
+## Overall Model Comparison¶    
     Category                   BERT     LMv3     Diff  Winner
     ----------------------------------------------------------
     HEADER                   0.2821   0.5315  +0.2494  LMv3
@@ -65,29 +41,7 @@ OTHER-STAMP is the opposite story. Both models struggle — BERT gets 0.276 and 
 OTHER-LOGO and OTHER-INSTRUCTION follow the same pattern. BERT nearly fails on both (0.104 and 0.032). LMv3 does better but still not well — 0.337 and 0.249. These are genuinely hard categories. Logos are visual and varied by definition. Instructions are long text blocks that look similar to answer fields. There is not enough signal in either text or layout patches alone to distinguish them consistently.
 
 Overall, expanding the OTHER category was the right decision for analysis purposes. It shows clearly that "OTHER" was never one coherent thing — it was a mix of very different elements, some text-detectable, some layout-dependent, and some that current models cannot handle well at all.
-    
-    
-    Saved: /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION/reports/figures/bert_original_vs_expanded.png
-    
 
-No description has been provided for this image
-    
-    
-    Saved: /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION/reports/figures/lmv3_original_vs_expanded.png
-    
-
-No description has been provided for this image
-    
-    
-    /var/folders/95/36zb2rc13_51f2jz0fbg4knh0000gn/T/ipykernel_41820/3214138418.py:31: UserWarning: FixedFormatter should only be used together with FixedLocator
-      ax.set_xticklabels(cats, rotation=20, ha="right")
-    
-
-No description has been provided for this image
-    
-    
-    Saved → /Users/shuffle/Desktop/Spring2026Thesis/CSCI1910/Project/csci1910s26-FormVISION/reports/figures/model_comparison_original_vs_expanded.png
-    
 
 ## Interpretation¶
 
@@ -119,11 +73,6 @@ Expected story:
   * **OTHER-INSTRUCTION** : looks like QUESTION text → both struggle
 
 
-
-No description has been provided for this image
-    
-    
-    Raw numbers:
     Subcategory                BERT     LMv3     Diff Winner
     -------------------------------------------------------
     OTHER-STAMP              0.2759   0.3095  +0.0336  Tie
